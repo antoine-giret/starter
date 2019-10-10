@@ -5,9 +5,9 @@ import { I18nProvider } from '@lingui/react'
 import { ThemeProvider } from '@material-ui/styles'
 
 import { rootActions, TRootAction, TRootState } from '../store'
+import catalogs from '../locales/catalogs'
 import Home from '../pages/home'
 
-import catalogs from './catalogs'
 import theme from './theme'
 import Routes from './routes'
 

@@ -1,4 +1,4 @@
-import frCatalog from '../locales/fr/messages'
+import frCatalog from './fr/messages'
 
 const catalogs = {
   fr: frCatalog,
