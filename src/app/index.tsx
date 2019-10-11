@@ -1,22 +1,32 @@
 import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
-import { BrowserRouter as Router, Route } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import { I18nProvider } from '@lingui/react'
 import { ThemeProvider } from '@material-ui/styles'
 
 import { rootActions, TRootAction, TRootState } from '../store'
 import catalogs from '../locales/catalogs'
 import Home from '../pages/home'
+import Login from '../pages/login'
+import Admin from '../pages/admin'
 
 import theme from './theme'
 import Routes from './routes'
+import PrivateRoute from './routes/private'
+import GuestRoute from './routes/guest'
 
 type TProps = ReturnType<typeof mapStateToProps> & TRootAction
 
-function App({ firebaseInitialized, firebaseInitRequest }: TProps) {
+function App({
+  firebaseInitialized,
+  user,
+  firebaseInitRequest: initFirebase,
+  firebaseLoginRequest: login,
+  firebaseLogoutRequest: logout,
+}: TProps) {
   useEffect(() => {
     if (!firebaseInitialized) {
-      firebaseInitRequest()
+      initFirebase()
     }
   }, [])
 
@@ -25,7 +35,17 @@ function App({ firebaseInitialized, firebaseInitRequest }: TProps) {
       <ThemeProvider theme={theme}>
         {firebaseInitialized ? (
           <Router>
-            <Route component={Home} path={Routes.HOME} />
+            <Switch>
+              <Route exact path={Routes.HOME}>
+                <Home />
+              </Route>
+              <GuestRoute path={Routes.LOGIN} user={user}>
+                <Login login={login} />
+              </GuestRoute>
+              <PrivateRoute path={Routes.ADMIN} user={user}>
+                <Admin logout={logout} user={user} />
+              </PrivateRoute>
+            </Switch>
           </Router>
         ) : (
           <></>
@@ -36,7 +56,7 @@ function App({ firebaseInitialized, firebaseInitRequest }: TProps) {
 }
 
 function mapStateToProps({ firebase }: TRootState) {
-  return { firebaseInitialized: firebase.initialized }
+  return { firebaseInitialized: firebase.initialized, user: firebase.user }
 }
 
 export default connect(

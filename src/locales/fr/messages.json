@@ -1,3 +1,7 @@
 {
-  "app_title": "Starter"
+  "app_title": "Starter",
+  "login_form.email": "Email",
+  "login_form.password": "Mot de passe",
+  "login_form.title": "Connexion",
+  "user.actions.logout": "Se déconnecter"
 }
