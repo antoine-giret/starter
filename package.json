@@ -28,7 +28,7 @@
     "styled-components": "4.4.0"
   },
   "devDependencies": {
-    "@babel/core": "7.6.2",
+    "@babel/core": "7.6.4",
     "@commitlint/cli": "8.2.0",
     "@commitlint/config-conventional": "8.2.0",
     "@lingui/cli": "2.8.3",
