@@ -1,45 +1,9 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { Trans } from '@lingui/react'
-import {
-  AppBar,
-  Button,
-  Menu,
-  MenuItem,
-  Toolbar,
-  Typography,
-} from '@material-ui/core'
-import { AccountCircle as AccountIcon } from '@material-ui/icons'
+import { AppBar, Toolbar, Typography } from '@material-ui/core'
 import styled from 'styled-components'
 
-import { User } from '../../types'
-
-interface IProps {
-  enableUserMenu?: boolean
-  user?: User | null
-  logout?: () => void
-}
-
-function Header({ user, enableUserMenu, logout }: IProps) {
-  const [
-    userButtonAnchorEl,
-    setUserButtonAnchorEl,
-  ] = useState<HTMLButtonElement | null>(null)
-
-  function handleUserButtonClick(event: React.MouseEvent<HTMLButtonElement>) {
-    setUserButtonAnchorEl(event.currentTarget)
-  }
-
-  function handleUserMenuClose() {
-    setUserButtonAnchorEl(null)
-  }
-
-  function handleLogout() {
-    if (logout) {
-      logout()
-      setUserButtonAnchorEl(null)
-    }
-  }
-
+function Header() {
   return (
     <AppBar color="default" elevation={0} position="fixed">
       <Toolbar>
@@ -47,30 +11,6 @@ function Header({ user, enableUserMenu, logout }: IProps) {
           <Trans id="app_title" />
         </Typography>
         <StyledSpacer />
-        {user && enableUserMenu && (
-          <>
-            <Button
-              aria-controls="user-menu"
-              aria-haspopup="true"
-              onClick={handleUserButtonClick}
-              startIcon={<AccountIcon />}
-              variant="outlined"
-            >
-              {user.firstName}
-            </Button>
-            <Menu
-              anchorEl={userButtonAnchorEl}
-              id="user-menu"
-              keepMounted
-              onClose={handleUserMenuClose}
-              open={Boolean(userButtonAnchorEl)}
-            >
-              <MenuItem onClick={handleLogout}>
-                <Trans id="user.actions.logout">Se déconnecter</Trans>
-              </MenuItem>
-            </Menu>
-          </>
-        )}
       </Toolbar>
     </AppBar>
   )

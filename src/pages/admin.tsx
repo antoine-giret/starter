@@ -1,7 +1,7 @@
 import React from 'react'
 import { Typography } from '@material-ui/core'
 
-import Layout from '../layouts/default'
+import Layout from '../layouts/admin'
 import { User } from '../types'
 
 interface IProps {
@@ -10,8 +10,12 @@ interface IProps {
 }
 
 function Admin({ user, logout }: IProps) {
+  if (!user) {
+    return <></>
+  }
+
   return (
-    <Layout enableUserMenu logout={logout} user={user}>
+    <Layout logout={logout} user={user}>
       <Typography variant="body1">Admin</Typography>
     </Layout>
   )
