@@ -1,6 +1,9 @@
 {
   "app_title": "Starter",
   "login_form.email": "Email",
+  "login_form.errors.email_required": "L'email est requis",
+  "login_form.errors.invalid_credentials": "Email ou mot de passe invalides",
+  "login_form.errors.invalid_email": "L'email n'est pas valide",
   "login_form.password": "Mot de passe",
   "login_form.title": "Connexion",
   "user.actions.logout": "Se déconnecter"

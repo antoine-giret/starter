@@ -4,14 +4,22 @@ import { User } from '../../../types'
 
 import { FirebaseActions } from '.'
 
+export enum FirebaseErrors {
+  LOGIN = 'firebaseErrors/LOGIN',
+}
+
 export interface IFirebaseState {
   user: User | null | undefined
   initialized: boolean
+  errors: { [key: string]: Error | null }
 }
 
 const INITIAL_STATE: IFirebaseState = {
   user: undefined,
   initialized: false,
+  errors: {
+    [FirebaseErrors.LOGIN]: null,
+  },
 }
 
 export const firebaseReducer = createReducer(INITIAL_STATE, {
@@ -25,6 +33,9 @@ export const firebaseReducer = createReducer(INITIAL_STATE, {
 
     state.user = user
     state.initialized = true
+  },
+  [FirebaseActions.firebaseLoginRequest.type]: (state: IFirebaseState) => {
+    state.errors[FirebaseErrors.LOGIN] = null
   },
   [FirebaseActions.firebaseLoginSuccess.type]: (
     state: IFirebaseState,
@@ -42,7 +53,7 @@ export const firebaseReducer = createReducer(INITIAL_STATE, {
   ) => {
     const { payload: error } = action
 
-    console.log(error)
+    state.errors[FirebaseErrors.LOGIN] = error
   },
   [FirebaseActions.firebaseLogoutSuccess.type]: (state: IFirebaseState) => {
     state.user = null

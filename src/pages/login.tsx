@@ -5,14 +5,15 @@ import Layout from '../layouts/default'
 import LoginForm from '../components/forms/login'
 
 interface IProps {
+  error: Error | null
   login: ({ email, password }: { email: string; password: string }) => void
 }
 
-function Login({ login }: IProps) {
+function Login({ error, login }: IProps) {
   return (
     <Layout>
       <StyledContainer>
-        <LoginForm login={login} />
+        <LoginForm error={error} login={login} />
       </StyledContainer>
     </Layout>
   )

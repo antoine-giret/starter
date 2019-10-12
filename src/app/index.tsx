@@ -5,6 +5,7 @@ import { I18nProvider } from '@lingui/react'
 import { ThemeProvider } from '@material-ui/styles'
 
 import { rootActions, TRootAction, TRootState } from '../store'
+import { FirebaseErrors } from '../store/modules/firebase'
 import catalogs from '../locales/catalogs'
 import Home from '../pages/home'
 import Login from '../pages/login'
@@ -20,6 +21,7 @@ type TProps = ReturnType<typeof mapStateToProps> & TRootAction
 function App({
   firebaseInitialized,
   user,
+  firebaseErrors,
   firebaseInitRequest: initFirebase,
   firebaseLoginRequest: login,
   firebaseLogoutRequest: logout,
@@ -40,7 +42,7 @@ function App({
                 <Home />
               </Route>
               <GuestRoute path={Routes.LOGIN} user={user}>
-                <Login login={login} />
+                <Login error={firebaseErrors[FirebaseErrors.LOGIN]} login={login} />
               </GuestRoute>
               <PrivateRoute path={Routes.ADMIN} user={user}>
                 <Admin logout={logout} user={user} />
@@ -56,7 +58,11 @@ function App({
 }
 
 function mapStateToProps({ firebase }: TRootState) {
-  return { firebaseInitialized: firebase.initialized, user: firebase.user }
+  return {
+    firebaseInitialized: firebase.initialized,
+    user: firebase.user,
+    firebaseErrors: firebase.errors,
+  }
 }
 
 export default connect(
