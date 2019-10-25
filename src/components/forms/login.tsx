@@ -30,10 +30,11 @@ interface IProps {
 type TProps = withI18nProps & IProps
 
 function LoginForm({ i18n, error, login }: TProps) {
-  const formikRef = useRef<Formik<IValues>>(null)
+  const formikRef = useRef(null)
 
   useEffect(() => {
     if (error && formikRef.current) {
+      // @ts-ignore
       formikRef.current.setErrors({
         email: i18n._('login_form.errors.invalid_credentials'),
       })
