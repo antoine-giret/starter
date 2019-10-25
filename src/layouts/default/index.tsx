@@ -3,19 +3,22 @@ import { Theme } from '@material-ui/core'
 import { useTheme } from '@material-ui/styles'
 import styled from 'styled-components'
 
+import { User } from '../../types'
+
 import Header from './header'
 import Footer from './footer'
 
 interface IProps {
   children: React.ReactNode
+  user?: User | null
 }
 
-function Layout({ children }: IProps) {
+function Layout({ children, user }: IProps) {
   const theme = useTheme()
 
   return (
     <>
-      <Header />
+      <Header user={user} />
       <Wrapper>
         <StyledHeader theme={theme} />
         <StyledContent>{children}</StyledContent>

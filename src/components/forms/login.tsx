@@ -106,12 +106,12 @@ function LoginForm({ i18n, error, login }: TProps) {
             </CardContent>
             <StyledCardActions>
               <Button
-                color="primary"
+                color="secondary"
                 disabled={isSubmitting}
                 type="submit"
                 variant="contained"
               >
-                Submit
+                <Trans id="user.actions.login">Se connecter</Trans>
               </Button>
             </StyledCardActions>
           </form>

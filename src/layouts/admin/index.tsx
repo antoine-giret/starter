@@ -1,11 +1,11 @@
-import React from 'react'
-import { Theme } from '@material-ui/core'
-import { useTheme } from '@material-ui/styles'
+import React, { useState } from 'react'
+import { DefaultTheme, useTheme } from '@material-ui/styles'
 import styled from 'styled-components'
 
 import { User } from '../../types'
 
 import Header from './header'
+import Drawer from './drawer'
 
 interface IProps {
   children: React.ReactNode
@@ -14,20 +14,28 @@ interface IProps {
 }
 
 function Layout({ children, user, logout }: IProps) {
+  const [drawerOpen, toggleDrawer] = useState<boolean>(false)
   const theme = useTheme()
 
   return (
     <>
-      <Header logout={logout} user={user} />
+      <Header onDrawerToggle={toggleDrawer} />
       <Wrapper>
         <StyledHeader theme={theme} />
         <StyledContent>{children}</StyledContent>
       </Wrapper>
+      <Drawer
+        logout={logout}
+        onDrawerToggle={toggleDrawer}
+        open={drawerOpen}
+        theme={theme}
+        user={user}
+      />
     </>
   )
 }
 
-const StyledHeader = styled.div<{ theme: Theme }>`
+const StyledHeader = styled.div<{ theme: DefaultTheme }>`
   ${({ theme }) => theme.mixins.toolbar}
 `
 

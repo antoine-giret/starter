@@ -39,7 +39,7 @@ function App({
           <Router>
             <Switch>
               <Route exact path={Routes.HOME}>
-                <Home />
+                <Home user={user} />
               </Route>
               <GuestRoute path={Routes.LOGIN} user={user}>
                 <Login error={firebaseErrors[FirebaseErrors.LOGIN]} login={login} />

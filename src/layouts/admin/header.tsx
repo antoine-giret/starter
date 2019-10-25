@@ -1,75 +1,48 @@
-import React, { useState } from 'react'
+import React from 'react'
+import { Link } from 'react-router-dom'
 import { Trans } from '@lingui/react'
-import {
-  AppBar,
-  Button,
-  Menu,
-  MenuItem,
-  Toolbar,
-  Typography,
-} from '@material-ui/core'
-import { AccountCircle as AccountIcon } from '@material-ui/icons'
+import { AppBar, IconButton, Toolbar, Typography } from '@material-ui/core'
+import { Menu as MenuIcon } from '@material-ui/icons'
 import styled from 'styled-components'
 
-import { User } from '../../types'
+import Routes from '../../app/routes'
 
 interface IProps {
-  user: User
-  logout: () => void
+  onDrawerToggle: (open: boolean) => void
 }
 
-function Header({ user, logout }: IProps) {
-  const [
-    userButtonAnchorEl,
-    setUserButtonAnchorEl,
-  ] = useState<HTMLButtonElement | null>(null)
-
-  function handleUserButtonClick(event: React.MouseEvent<HTMLButtonElement>) {
-    setUserButtonAnchorEl(event.currentTarget)
-  }
-
-  function handleUserMenuClose() {
-    setUserButtonAnchorEl(null)
-  }
-
-  function handleLogout() {
-    if (logout) {
-      logout()
-      setUserButtonAnchorEl(null)
-    }
+function Header({ onDrawerToggle }: IProps) {
+  function handleDrawerOpen() {
+    onDrawerToggle(true)
   }
 
   return (
-    <AppBar color="default" elevation={0} position="fixed">
+    <AppBar color="primary" position="fixed">
       <Toolbar>
-        <Typography component="h1" variant="h6">
-          <Trans id="app_title" />
-        </Typography>
+        <StyledMenuButton
+          aria-label="menu"
+          color="inherit"
+          edge="start"
+          onClick={handleDrawerOpen}
+        >
+          <MenuIcon />
+        </StyledMenuButton>
+        <Link style={{ color: 'inherit', textDecoration: 'none' }} to={Routes.HOME}>
+          <Typography color="inherit" component="h1" variant="h6">
+            <Trans id="app_title" />
+          </Typography>
+        </Link>
         <StyledSpacer />
-        <Button
-          aria-controls="user-menu"
-          aria-haspopup="true"
-          onClick={handleUserButtonClick}
-          startIcon={<AccountIcon />}
-          variant="outlined"
-        >
-          {user.firstName}
-        </Button>
-        <Menu
-          anchorEl={userButtonAnchorEl}
-          id="user-menu"
-          keepMounted
-          onClose={handleUserMenuClose}
-          open={Boolean(userButtonAnchorEl)}
-        >
-          <MenuItem onClick={handleLogout}>
-            <Trans id="user.actions.logout">Se déconnecter</Trans>
-          </MenuItem>
-        </Menu>
       </Toolbar>
     </AppBar>
   )
 }
+
+const StyledMenuButton = styled(IconButton)`
+  && {
+    margin-right: 16px;
+  }
+`
 
 const StyledSpacer = styled.div`
   flex-grow: 1;
